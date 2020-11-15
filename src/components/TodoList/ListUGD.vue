@@ -34,7 +34,7 @@
                 </template>
             </v-data-table>
         </v-card>
-
+        
         <v-dialog
             v-model="dialog"
             persistent
@@ -79,7 +79,6 @@ export default {
         return {
             search:null,
             dialog:false,
-            tempTodo:null,
             filters:"All Priority",
             selected: [],
             headers: [
@@ -124,13 +123,6 @@ export default {
             this.dialog = false;
         },
         cancel(){
-            let index =  this.findIndexTodos(this.formTodo);
-            if(index < 0){ // alias ga ketemu -1
-                this.todos.push(this.tempTodo);
-            }else {
-                this.todos[index] = this.tempTodo;
-            }
-            console.log(this.tempTodo);
             this.resetForm();
             this.dialog = false;
         },
@@ -142,7 +134,9 @@ export default {
             };
         },
         editItem(item){
-            this.formTodo = item;
+            this.formTodo.task = item.task;
+            this.formTodo.priority = item.priority;
+            this.formTodo.note = item.note;
             this.dialog = true;
         },
         deleteItem(item){
@@ -170,7 +164,7 @@ export default {
             }
             
         },
-    }
+    },
     
 };
 </script>
